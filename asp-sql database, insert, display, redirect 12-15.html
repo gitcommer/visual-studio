@@ -1,0 +1,57 @@
+<!--
+date: july 27, 2019
+tutorial: https://www.youtube.com/watch?v=VieIn8QefnA
+
+
+
+
+1. new project, web (2012), ASP.NET Web Application, file name, OK
+		note: you can see the project you created on the left side at Solution Explorer
+
+2. right click the project, add, New Item, Web(Web Form), name of web form, OK
+		note: this will create a html file
+
+   - add 2 textbox and 1 button
+
+3. create database - right click the project, add, New Item, Data, SQL Server Database, OK, Yes
+		note: this will create database on the project
+
+	- Server Explorer, Data connections, Database created, right click on Tables, add new table
+		- add column on table like
+				sql ui: 	username 	varchar(50) 	uncheck
+							rollno	 	varchar(50) 	uncheck
+
+				sql code: 	CREATE TABLE [dbo].[userinfo]	//dont forget to change the table name
+							[id] INT IDENTITY(1,1), 		//this is use to increment table
+
+							- click update, Update Database
+
+4. double click on button and add this code
+
+    using System.Data.SqlClient;
+    using System.Configuration;
+
+
+	protected void Button1_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnect"].ConnectionString);        //db connection
+            con.Open();                                                                                                         //open connection to be inserted
+            string insert = "insert into userinfo (username,rollno) values(@username,@rollno)";                                 //sql insert query
+            SqlCommand cmd = new SqlCommand(insert, con);
+            cmd.Parameters.AddWithValue("@username", TextBox1.Text);                                                            //get the forms data
+            cmd.Parameters.AddWithValue("@rollno", TextBox2.Text);
+            cmd.ExecuteNonQuery();                                                                                              //run the program
+            Response.Redirect("home.aspx");                                                                                     //redirect to home html
+            con.Close();                                                                                                        //close db connection
+        }
+        catch (Exception ex) 
+        {
+            Response.Write(ex);
+        }
+    }
+
+5. redirect page and display inserted data - right click the project, add, New Item, Web(Web Form), home.aspx, OK
+                                           - Toolbox, Data, SqlDataSource, Configure Data Source, select database created, Next, ConnectionString(change to dbconnect), Next, Next, Test Query, Finish
+                                           - Toolbox, GridView, SqlDataSource1(dropdown), Auto Format(to change table ui), OK

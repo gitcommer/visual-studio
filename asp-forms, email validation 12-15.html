@@ -1,0 +1,44 @@
+<!--
+date: july 27, 2019
+tutorial: https://www.youtube.com/watch?v=64raTj1C3FQ
+
+
+
+
+1. New Project, Web(ASP.NET Web Application), validationtest(project name), OK
+
+2. right click project, add, New Item, Web Form, Add
+        Design:     - ToolBox, add 2 textbox and 1 button
+
+                    
+                    1. invalid email or required field to first textfield
+
+                    - ToolBox, Validation, RegularExpressionValidator, right click, properties       //this is use for email validation
+                        properties: - ErrorMessage      - change to "Invalid Email"
+                                    - ControlToValid    - TextBox1
+                                    - ValidationExpre   - Internet e-mail address, OK
+
+                    - ToolBox, Validation, RequiredFieldValidator, right click, properties          //this is use for textfield validation
+                        properties: - ErrorMessage      - change to "Required Field"
+                                    - ControlToValid    - TextBox1
+
+
+                    2. required field to second textfield
+
+                    - ToolBox, Validation, RequiredFieldValidator, right click, properties          //this is use for textfield validation
+                        properties: - ErrorMessage      - change to "Required Field"
+                                    - ControlToValid    - TextBox2
+
+3. run to google chrome
+
+   note: if error follo this
+
+   1. go to Web.Config and copy
+
+        <appSettings>
+            <add key="ValidationSettings:UnobtrusiveValidationMode" value="None" />
+        </appSettings>
+
+    2. go to Web.Config of your project and paste this after to </system.codedon>
+
+4. run the WebForm html not the code
